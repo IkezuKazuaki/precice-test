@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<precice-configuration>
+  <log enabled="1">
+    <sink filter="%Severity% > debug" />
+  </log>
+
+  <data:scalar name="accCart" waveform-degree="3" />
+  <data:scalar name="accPendulum" waveform-degree="3" />
+
+  <mesh name="Cart-Mesh" dimensions="2">
+    <use-data name="accCart"/>
+    <use-data name="accPendulum"/>
+  </mesh>
+
+  <mesh name="Pendulum-Mesh" dimensions="2">
+    <use-data name="accCart"/>
+    <use-data name="accPendulum"/>
+  </mesh>
+
+  <participant name="Cart">
+    <provide-mesh name="Cart-Mesh"/>
+    <receive-mesh name="Pendulum-Mesh" from="Pendulum"/> <!-- 必須 -->
+    <write-data name="accCart" mesh="Cart-Mesh"/>
+    <read-data name="accPendulum" mesh="Pendulum-Mesh"/> <!-- Pendulum-Mesh から読み込む -->
+  </participant>
+
+  <participant name="Pendulum">
+    <receive-mesh name="Cart-Mesh" from="Cart"/>
+    <provide-mesh name="Pendulum-Mesh"/>
+    <write-data name="accPendulum" mesh="Pendulum-Mesh"/>
+    <read-data name="accCart" mesh="Pendulum-Mesh"/> <!-- 自分のメッシュから読み込む -->
+    <mapping:nearest-neighbor
+      direction="write"
+      from="Pendulum-Mesh"
+      to="Cart-Mesh"
+      constraint="consistent"/>
+    <mapping:nearest-neighbor
+      direction="read"
+      from="Cart-Mesh"
+      to="Pendulum-Mesh"
+      constraint="consistent"/>
+  </participant>
+
+  <m2n:sockets acceptor="Cart" connector="Pendulum" exchange-directory=".." />
+
+  <coupling-scheme:serial-implicit>
+    <participants first="Cart" second="Pendulum"/>
+    <max-time value="10.0"/>
+    <time-window-size value="0.03"/>
+    <max-iterations value="100"/>
+    <relative-convergence-measure data="accCart" mesh="Cart-Mesh" limit="1e-6"/>
+    <relative-convergence-measure data="accPendulum" mesh="Pendulum-Mesh" limit="1e-6"/>
+    <exchange
+      data="accCart"
+      mesh="Cart-Mesh"
+      from="Cart"
+      to="Pendulum"
+      initialize="true"
+      substeps="true" />
+    <exchange
+      data="accPendulum"
+      mesh="Pendulum-Mesh"
+      from="Pendulum"
+      to="Cart"
+      initialize="true"
+      substeps="true" />
+  </coupling-scheme:serial-implicit>
+</precice-configuration>

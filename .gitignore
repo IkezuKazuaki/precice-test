@@ -1,0 +1,34 @@
+# ビルドディレクトリ
+/build/
+bin/
+obj/
+
+# ログファイル
+*.log
+
+# 一時ファイル
+*.tmp
+*.swp
+*.bak
+
+# IDEやエディタの設定ファイル
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS固有のファイル
+.DS_Store
+Thumbs.db
+
+# Python仮想環境
+venv/
+__pycache__/
+
+# その他の不要なファイル
+*.out
+*.class
+
+# 出力ファイル
+cart-pendulum/output/
+cart-pendulum/precice-profiling/
