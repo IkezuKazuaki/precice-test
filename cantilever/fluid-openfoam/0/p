@@ -12,7 +12,7 @@ internalField   uniform 0;
 
 boundaryField
 {
-    flap
+    beam
     {
         type            zeroGradient;
     }

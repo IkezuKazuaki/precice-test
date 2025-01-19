@@ -32,3 +32,9 @@ __pycache__/
 # 出力ファイル
 cart-pendulum/output/
 cart-pendulum/precice-profiling/
+
+# すべての数字で始まるものを無視
+precice-test/cantilever/fluid-openfoam/[0-9]*
+
+# ただし、0 ディレクトリは追跡
+!precice-test/cantilever/fluid-openfoam/0

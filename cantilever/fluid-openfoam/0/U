@@ -13,7 +13,7 @@ internalField   uniform (0 0 0);
 boundaryField
 {
 
-    flap
+    beam
     {
         type            movingWallVelocity;
         value           uniform (0 0 0);

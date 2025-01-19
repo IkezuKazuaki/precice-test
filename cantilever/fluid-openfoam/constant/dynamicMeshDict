@@ -15,5 +15,5 @@ solver      displacementLaplacian;
 // OpenFOAM9 or newer: rename "solver" to "motionSolver"
 
 displacementLaplacianCoeffs {
-    diffusivity quadratic inverseDistance (flap);
+    diffusivity quadratic inverseDistance (beam);
 }

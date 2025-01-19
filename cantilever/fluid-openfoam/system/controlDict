@@ -42,7 +42,7 @@ functions
     {
         type                forces;
         libs                ( "libforces.so" );
-        patches             (flap);
+        patches             (beam);
         rho                 rhoInf;
         log                 true;
         rhoInf              10;
